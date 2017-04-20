@@ -1,0 +1,27 @@
+language: node_js
+
+node_js: stable
+
+before_install:
+  - git config --global push.default matching
+  - git config --global user.name "pengchongfu" 
+  - git config --global user.email "pengchongfu@gmail.com"
+
+install:
+  - npm install hexo-cli -g
+  - npm install
+
+script:
+  - hexo cl
+  - hexo g
+
+after_success:
+  - cd ./public
+  - git init
+  - git add --all .
+  - git commit -m "Travis CI Auto Builder"
+  - git push --quiet --force https://$GH_TOKEN@github.com/pengchongfu/pengchongfu.github.io.git master
+
+branches:
+  only:
+    - source

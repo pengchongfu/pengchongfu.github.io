@@ -69,5 +69,5 @@ theme: one
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:steinsphang/steinsphang.github.io.git
+  repo: git@github.com:pengchongfu/pengchongfu.github.io.git
   branch: master

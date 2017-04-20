@@ -99,6 +99,11 @@ Drawer:
           type: link
           href: http://xythu.github.io
           icon: face
+        -
+          title: zhangqythu
+          type: link
+          href: http://zhangqythu.com
+          icon: face
 
 #取色器(在侧边抽屉)
 colorPicker: false

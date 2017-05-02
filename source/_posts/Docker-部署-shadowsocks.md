@@ -28,7 +28,7 @@ CMD /usr/bin/ss-server -s ::0 -s 0.0.0.0 -p 8388 -m aes-256-cfb -k password -a r
 
 pull 镜像，安装 shadowsocks-libev，启动 shadowsocks-libev，这样就结束了，非常简单。启动的时候同时监听了 ipv4 和 ipv6，并且监听容器内部 8388 端口，设置加密方式和密码，以 root 权限运行，支持 udp。
 
-注意，需要开启 Docker对 ipv6 的支持，参考[文档](https://docs.docker.com/engine/userguide/networking/default_network/ipv6/)）
+注意，需要开启 Docker对 ipv6 的支持，参考[文档](https://docs.docker.com/engine/userguide/networking/default_network/ipv6/)
 
 由于 dockerd 是一个 service，因此可以直接添加配置文件 `/etc/docker/daemon.json`
 

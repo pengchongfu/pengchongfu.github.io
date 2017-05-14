@@ -1,7 +1,9 @@
 ---
 title: Docker 部署 shadowsocks
 date: 2017-05-02 01:03:46
-tags: Docker shadowsocks
+tags:
+- Docker
+- shadowsocks
 ---
 
 最近工作时也慢慢地接触到了后端方面的项目，很多项目部署时都用了 Docker Compose。因此也学习了一些 Docker 的基本操作。

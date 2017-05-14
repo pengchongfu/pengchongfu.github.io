@@ -1,7 +1,7 @@
 ---
 title: time waits for no one
 date: 2016-04-29 09:30:43
-tags:
+tags: openwrt
 ---
 这几天又开始折腾起openwrt来了。。工作还没找到却在各种瞎折腾让我有一种time waits for no one的感觉。
 

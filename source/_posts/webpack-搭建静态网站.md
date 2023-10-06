@@ -3,7 +3,7 @@ title: webpack 搭建静态网站
 date: 2017-05-29 14:01:15
 tags:
 - webpack
-- vue
+- Vue
 - 前端
 ---
 

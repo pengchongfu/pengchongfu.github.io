@@ -1,0 +1,31 @@
+name: deploy
+on:
+  push:
+    branches:
+      source
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: source
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
+      - run: |
+          git config --global push.default simple
+          git config --global user.name "pengchongfu"
+          git config --global user.email "pengchongfu@gmail.com"
+      - run: |
+          npm install -g hexo-cli
+          npm install
+      - run: |
+          hexo cl
+          hexo g
+      - run: |
+          cd ./public
+          git init
+          git add --all
+          git commit -m "deploy"
+          git push --force https://${{ secrets.ghp }}@github.com/pengchongfu/pengchongfu.github.io.git master

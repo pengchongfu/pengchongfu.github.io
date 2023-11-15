@@ -76,7 +76,11 @@ sing-box 有以下优点：
         "rules": [
             {
                 "protocol": "dns",
-                "outbound": "dns"
+                "outbound": "dns-out"
+            },
+            {
+                "inbound": "dns-in",
+                "outbound": "dns-out"
             },
             {
                 "domain_suffix": [
@@ -104,6 +108,12 @@ sing-box 有以下优点：
             "inet6_address": "fdfe:dcba:9876::1/126",
             "auto_route": true,
             "sniff": true
+        },
+        {
+            "type": "direct",
+            "tag": "dns-in",
+            "listen": "::",
+            "listen_port": 53
         }
     ],
     "outbounds": [
@@ -113,7 +123,7 @@ sing-box 有以下优点：
         },
         {
             "type": "dns",
-            "tag": "dns"
+            "tag": "dns-out"
         },
         {
             "type": "shadowsocks",

@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>web 前端工程师面试记录 | pengchongfu's blog</title><meta name="author" content="pengchongfu"><meta name="copyright" content="pengchongfu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="转眼间从事 web 前端的工作也快两年了。然而 web 前端纷繁复杂，发展日新月异；计算机的知识更是博大精深。 自己所掌握和了解的知识点也很有限，平时写业务代码时也很少用到，唯有把面试中遇到的问题记录下来，以期将来有用 :)。 DOM 相关盒模型盒子由 margin border padding content 4部分组成。box-sizing 为 content-box 的时候 width 为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web 前端工程师面试记录">
+<meta property="og:url" content="http://blog.pengchongfu.com/2018/02/27/web-%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="pengchongfu&#39;s blog">
+<meta property="og:description" content="转眼间从事 web 前端的工作也快两年了。然而 web 前端纷繁复杂，发展日新月异；计算机的知识更是博大精深。 自己所掌握和了解的知识点也很有限，平时写业务代码时也很少用到，唯有把面试中遇到的问题记录下来，以期将来有用 :)。 DOM 相关盒模型盒子由 margin border padding content 4部分组成。box-sizing 为 content-box 的时候 width 为">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.pengchongfu.com/img/avatar.jpg">
+<meta property="article:published_time" content="2018-02-27T23:11:27.000Z">
+<meta property="article:modified_time" content="2024-04-26T01:19:29.070Z">
+<meta property="article:author" content="pengchongfu">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.pengchongfu.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://blog.pengchongfu.com/2018/02/27/web-%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'web 前端工程师面试记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-26 01:19:29'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="pengchongfu's blog"><span class="site-name">pengchongfu's blog</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">web 前端工程师面试记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2018-02-27T23:11:27.000Z" title="发表于 2018-02-27 23:11:27">2018-02-27</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>转眼间从事 web 前端的工作也快两年了。然而 web 前端纷繁复杂，发展日新月异；计算机的知识更是博大精深。</p>
+<p>自己所掌握和了解的知识点也很有限，平时写业务代码时也很少用到，唯有把面试中遇到的问题记录下来，以期将来有用 :)。</p>
+<h3 id="DOM-相关"><a href="#DOM-相关" class="headerlink" title="DOM 相关"></a>DOM 相关</h3><h4 id="盒模型"><a href="#盒模型" class="headerlink" title="盒模型"></a>盒模型</h4><p>盒子由 margin border padding content 4部分组成。box-sizing 为 content-box 的时候 width 为 content 的宽度，border-box 亦然。<br>padding 会填充上对应的背景颜色，<code>width: 100%</code>时，宽度为所在容器的宽度。</p>
+<h4 id="实现常见布局"><a href="#实现常见布局" class="headerlink" title="实现常见布局"></a>实现常见布局</h4><p>css 苦手，只能看平时的积累了。简单的三列布局可以用 float 实现。</p>
+<h3 id="框架相关"><a href="#框架相关" class="headerlink" title="框架相关"></a>框架相关</h3><h4 id="vue-响应式原理"><a href="#vue-响应式原理" class="headerlink" title="vue 响应式原理"></a>vue 响应式原理</h4><p>对 vue 来说，响应式的关键为 Object.defineProperty , get 的时候收集依赖项，set 的时候更新依赖项。</p>
+<h3 id="网络相关"><a href="#网络相关" class="headerlink" title="网络相关"></a>网络相关</h3><h4 id="同源跨域"><a href="#同源跨域" class="headerlink" title="同源跨域"></a>同源跨域</h4><p>协议、域名、端口号。常见的允许跨域的有 script link img。</p>
+<h4 id="jsonp"><a href="#jsonp" class="headerlink" title="jsonp"></a>jsonp</h4><p>jsonp 是很老的技术了，为了解决跨域的问题才出现的。需要传递 callback 的名字才可以正常执行。</p>
+<h4 id="tcp"><a href="#tcp" class="headerlink" title="tcp"></a>tcp</h4><p>三次握手，四次分手，通过滑动窗口和序号实现重新排序。</p>
+<h3 id="js相关"><a href="#js相关" class="headerlink" title="js相关"></a>js相关</h3><h4 id="作用域链、原型链、对象、this"><a href="#作用域链、原型链、对象、this" class="headerlink" title="作用域链、原型链、对象、this"></a>作用域链、原型链、对象、this</h4><p>理解还是能理解的，不过面试题都有各种神奇的陷阱，随缘😊。</p>
+<h4 id="异步模型"><a href="#异步模型" class="headerlink" title="异步模型"></a>异步模型</h4><ol>
+<li>macrotask 队列中执行一个 task</li>
+<li>microtask 队列中执行所有 task</li>
+<li>线程跳回 1</li>
+</ol>
+<h4 id="用-call-或-apply-实现-bind-函数"><a href="#用-call-或-apply-实现-bind-函数" class="headerlink" title="用 call 或 apply 实现 bind 函数"></a>用 call 或 apply 实现 bind 函数</h4><p>喜闻乐见的一道面试题。<br>考察了 this，作用域链，原型链，函数参数等一系列知识</p>
+<h4 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h4><p>promise resolve 为 microtask。</p>
+<h3 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h3><h4 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h4><p>需要从网络、渲染、js 等各个方面来优化</p>
+<h4 id="一些相关的考题"><a href="#一些相关的考题" class="headerlink" title="一些相关的考题"></a>一些相关的考题</h4><ul>
+<li>有序数组 merge 去重</li>
+<li>实现 throttle 函数</li>
+<li>sort 方法随机化数组，真的随机吗</li>
+</ul>
+<h3 id="编程能力相关"><a href="#编程能力相关" class="headerlink" title="编程能力相关"></a>编程能力相关</h3><h4 id="算法题"><a href="#算法题" class="headerlink" title="算法题"></a>算法题</h4><p>反转链表 反转二叉树 合并区间</p>
+<h4 id="编程思想"><a href="#编程思想" class="headerlink" title="编程思想"></a>编程思想</h4><p>设计模式，发布订阅模式</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/03/04/LEDE-%E9%85%8D%E7%BD%AE-ipv6/" title="LEDE 配置 ipv6"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">LEDE 配置 ipv6</div></div></a></div><div class="next-post pull-right"><a href="/2017/05/29/webpack-%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/" title="webpack 搭建静态网站"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">webpack 搭建静态网站</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">pengchongfu</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/pengchongfu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:pengchongfu@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM-%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">DOM 相关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%92%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">盒模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%B8%B8%E8%A7%81%E5%B8%83%E5%B1%80"><span class="toc-number">1.2.</span> <span class="toc-text">实现常见布局</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E7%9B%B8%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">框架相关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#vue-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86"><span class="toc-number">2.1.</span> <span class="toc-text">vue 响应式原理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3"><span class="toc-number">3.</span> <span class="toc-text">网络相关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8C%E6%BA%90%E8%B7%A8%E5%9F%9F"><span class="toc-number">3.1.</span> <span class="toc-text">同源跨域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jsonp"><span class="toc-number">3.2.</span> <span class="toc-text">jsonp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tcp"><span class="toc-number">3.3.</span> <span class="toc-text">tcp</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js%E7%9B%B8%E5%85%B3"><span class="toc-number">4.</span> <span class="toc-text">js相关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE%E3%80%81%E5%8E%9F%E5%9E%8B%E9%93%BE%E3%80%81%E5%AF%B9%E8%B1%A1%E3%80%81this"><span class="toc-number">4.1.</span> <span class="toc-text">作用域链、原型链、对象、this</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.2.</span> <span class="toc-text">异步模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8-call-%E6%88%96-apply-%E5%AE%9E%E7%8E%B0-bind-%E5%87%BD%E6%95%B0"><span class="toc-number">4.3.</span> <span class="toc-text">用 call 或 apply 实现 bind 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#promise"><span class="toc-number">4.4.</span> <span class="toc-text">promise</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E7%A8%8B%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">工程化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">5.1.</span> <span class="toc-text">性能优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%9B%B8%E5%85%B3%E7%9A%84%E8%80%83%E9%A2%98"><span class="toc-number">5.2.</span> <span class="toc-text">一些相关的考题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%83%BD%E5%8A%9B%E7%9B%B8%E5%85%B3"><span class="toc-number">6.</span> <span class="toc-text">编程能力相关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E9%A2%98"><span class="toc-number">6.1.</span> <span class="toc-text">算法题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3"><span class="toc-number">6.2.</span> <span class="toc-text">编程思想</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/15/%E5%AE%B6%E7%94%A8-nas-%E6%90%AD%E5%BB%BA/" title="家用 nas 搭建">家用 nas 搭建</a><time datetime="2024-04-15T07:54:34.000Z" title="发表于 2024-04-15 07:54:34">2024-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/22/%E4%BA%92%E8%81%94%E7%BD%91%E4%BA%A7%E5%93%81%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B/" title="互联网产品研发流程">互联网产品研发流程</a><time datetime="2024-02-22T13:59:56.000Z" title="发表于 2024-02-22 13:59:56">2024-02-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/" title="sing-box tun 模式介绍">sing-box tun 模式介绍</a><time datetime="2023-11-12T21:24:59.000Z" title="发表于 2023-11-12 21:24:59">2023-11-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/05/%E6%A0%91%E8%8E%93%E6%B4%BE%E9%85%8D%E7%BD%AE%E4%B8%BA%E4%BB%A3%E7%90%86%E7%BD%91%E5%85%B3/" title="树莓派配置为代理网关">树莓派配置为代理网关</a><time datetime="2023-10-05T11:12:00.000Z" title="发表于 2023-10-05 11:12:00">2023-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/03/04/LEDE-%E9%85%8D%E7%BD%AE-ipv6/" title="LEDE 配置 ipv6">LEDE 配置 ipv6</a><time datetime="2018-03-04T22:52:30.000Z" title="发表于 2018-03-04 22:52:30">2018-03-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2024 By pengchongfu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadDisqus () {
+  const disqus_config = function () {
+    this.page.url = 'http://blog.pengchongfu.com/2018/02/27/web-%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/'
+    this.page.identifier = '/2018/02/27/web-%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/'
+    this.page.title = 'web 前端工程师面试记录'
+  }
+
+  const disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addModeChange('disqus', disqusReset)
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://pengchongfu.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Disqus' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

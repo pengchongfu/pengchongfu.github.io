@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LEDE 路由器配置记录 | pengchongfu's blog</title><meta name="author" content="pengchongfu"><meta name="copyright" content="pengchongfu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="最近总有人问起我该如何配置 LEDE 路由器的网络代理功能。而想到我之前也帮好几个朋友配置过路由器，他们以后可能也需要了解了解关于这方面的知识。干脆从零开始写一个简单的配置记录吧。 想起了 openwrt 的第一次接触，应该是大三的时候了吧。当时啥都不懂，连 linux 的基本操作都不会。但是想着能连接路由器用 ipv6，就给路由器刷上了 openwrt。当然因为对网络一窍不通，最后以失败告终。唯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LEDE 路由器配置记录">
+<meta property="og:url" content="http://blog.pengchongfu.com/2017/05/13/LEDE-%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="pengchongfu&#39;s blog">
+<meta property="og:description" content="最近总有人问起我该如何配置 LEDE 路由器的网络代理功能。而想到我之前也帮好几个朋友配置过路由器，他们以后可能也需要了解了解关于这方面的知识。干脆从零开始写一个简单的配置记录吧。 想起了 openwrt 的第一次接触，应该是大三的时候了吧。当时啥都不懂，连 linux 的基本操作都不会。但是想着能连接路由器用 ipv6，就给路由器刷上了 openwrt。当然因为对网络一窍不通，最后以失败告终。唯">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.pengchongfu.com/img/avatar.jpg">
+<meta property="article:published_time" content="2017-05-13T19:24:25.000Z">
+<meta property="article:modified_time" content="2024-04-26T01:19:29.070Z">
+<meta property="article:author" content="pengchongfu">
+<meta property="article:tag" content="shadowsocks">
+<meta property="article:tag" content="LEDE">
+<meta property="article:tag" content="openwrt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.pengchongfu.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://blog.pengchongfu.com/2017/05/13/LEDE-%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'LEDE 路由器配置记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-26 01:19:29'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="pengchongfu's blog"><span class="site-name">pengchongfu's blog</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">LEDE 路由器配置记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2017-05-13T19:24:25.000Z" title="发表于 2017-05-13 19:24:25">2017-05-13</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>最近总有人问起我该如何配置 LEDE 路由器的网络代理功能。而想到我之前也帮好几个朋友配置过路由器，他们以后可能也需要了解了解关于这方面的知识。干脆从零开始写一个简单的配置记录吧。</p>
+<p>想起了 openwrt 的第一次接触，应该是大三的时候了吧。当时啥都不懂，连 linux 的基本操作都不会。但是想着能连接路由器用 ipv6，就给路由器刷上了 openwrt。当然因为对网络一窍不通，最后以失败告终。唯一的收获是成功关上了路由器上的 led :)。</p>
+<p>所以开始配置路由器吧，前提条件是对 linux 和网络有基本的了解。</p>
+<h3 id="安装-LEDE"><a href="#安装-LEDE" class="headerlink" title="安装 LEDE"></a>安装 LEDE</h3><p><a target="_blank" rel="noopener" href="https://lede-project.org/start">LEDE</a> 是一个基于 openwrt 的发行版。貌似是觉得 openwrt 开发太慢了，于是 fork 了一份代码重新开发。</p>
+<p>安装的教程网上有很多，此处就不赘述了。大概思路就是下载固件，<code>scp</code> 到路由器上（当然要是从原生的系统刷的话还要用到 <code>ftp</code>），然后安装。这里我们选择目前最新的稳定版 LEDE 17.01.1。</p>
+<p>装上之后修改一下密码，打开 wifi，配置好 wifi。</p>
+<p>具体的教程可以参考<a href="/post/time-waits-for-no-one/">这里</a></p>
+<h3 id="配置-ipv6"><a href="#配置-ipv6" class="headerlink" title="配置 ipv6"></a>配置 ipv6</h3><p>下一步先配置 ipv6。我所使用过的 ipv6 配置方式主要有两种：一种是 nat，一种是像这篇<a href="/post/time-waits-for-no-one/">文章</a>里的使用邻居发现协议的方法。</p>
+<p>第二种方法看起来很不错，因为可以获取公有 ipv6 地址，但是需要上级路由器支持。。而高校内的设备有很多并不支持邻居发现协议。<br>这就会导致：电脑发送的包成功送到了 vps；vps 通过 <code>traceroute</code> 只能追踪到路由器的上级高校设备。<br>而通过抓包发现，上级高校设备广播 <code>who has</code> 报文，询问电脑在哪；路由器也成功向上级高校设备发送了响应报文，说电脑在我这。但是上级高校设备不予理会，继续发送 <code>who has</code> 报文。。。</p>
+<p>所以我们使用 nat 的方式比较稳定可靠。我们可以参考这个<a target="_blank" rel="noopener" href="http://blog.csdn.net/cod1ng/article/details/45421025">教程</a>和这里的<a target="_blank" rel="noopener" href="https://github.com/tuna/ipv6.tsinghua.edu.cn/issues/7">讨论</a>来进行配置。</p>
+<p>安装需要的软件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">opkg update</span><br><span class="line">opkg install kmod-ipt-nat6</span><br></pre></td></tr></table></figure>
+
+<p>向 <code>/etc/firewall.user</code> 添加以下一行已进行 ipv6 的 nat</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip6tables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>/etc/config/dhcp</code>，添加 <code>ra_default</code> 和 <code>ra_management</code> 两项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">config dhcp &#x27;lan&#x27;</span><br><span class="line">    option interface &#x27;lan&#x27;</span><br><span class="line">    option start &#x27;100&#x27;</span><br><span class="line">    option limit &#x27;150&#x27;</span><br><span class="line">    option leasetime &#x27;12h&#x27;</span><br><span class="line">    option dhcpv6 &#x27;server&#x27;</span><br><span class="line">    option ra &#x27;server&#x27;</span><br><span class="line">    option ra_management &#x27;1&#x27;</span><br><span class="line">    option ra_default &#x27;1&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>当然现在还是不行的。因为路由器的路由表是有问题的。我们必须修改路由表。在路由器上输入命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip -6 route show default</span><br></pre></td></tr></table></figure>
+
+<p>可以看到默认的路由表。其中 <code>via</code> 字段后的就是上级设备的 ip，我们只需要将这个路由规则用到所有的情况就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip -6 route add default via xxxx::xxxx dev eth0 metric 512</span><br></pre></td></tr></table></figure>
+
+<p>这时应该就可以了，当然这个配置是临时的，我们需要加到启动项中<br><code>/etc/hotplug.d/iface/</code> 下新建一个文件 <code>90-ipv6</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">[ &quot;$ACTION&quot; = ifup ] || exit 0</span><br><span class="line">ip -6 route add default via xxxx::xxxx dev eth0 metric 512</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="挂载-u盘"><a href="#挂载-u盘" class="headerlink" title="挂载 u盘"></a>挂载 u盘</h3><p>由于我的路由器太古老了。。容量太低，不挂载 u盘的话连 shadowsocks 都装不上。因此需要挂载 u盘。要是路由器容量比较大的话可以省略这一步。<br>主要参考官方<a target="_blank" rel="noopener" href="https://lede-project.org/docs/user-guide/extroot_configuration">文档</a>就可以了，文档很详细明了。我的路由器容量实在太低，需要自行编译固件，不赘述了，所以还是买一个大容量的路由器比较靠谱。。</p>
+<h3 id="安装-shadowsocks"><a href="#安装-shadowsocks" class="headerlink" title="安装 shadowsocks"></a>安装 shadowsocks</h3><p>到 github 的 <a target="_blank" rel="noopener" href="https://github.com/shadowsocks/openwrt-shadowsocks/releases">release</a> 处下载对应硬件版本的安装包进行安装。</p>
+<p>添加配置文件 <code>/etc/shadowsocks.json</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;: &quot;X.X.X.X&quot;,</span><br><span class="line">    &quot;server_port&quot;: &quot;8388&quot;,</span><br><span class="line">    &quot;password&quot;: &quot;password&quot;,</span><br><span class="line">    &quot;local_port&quot;: &quot;1080&quot;,</span><br><span class="line">    &quot;method&quot;: &quot;aes-256-cfb&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>地址填 ipv6 的话可以代理 ipv4 流量，大大缓解校园网计费的问题，虽然会有些卡</em></p>
+<p>添加启动脚本 <code>/etc/init.d/shadowsocks</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh /etc/rc.common</span><br><span class="line"></span><br><span class="line">START=95</span><br><span class="line"></span><br><span class="line">SERVICE_USE_PID=1</span><br><span class="line">SERVICE_WRITE_PID=1</span><br><span class="line">SERVICE_DAEMONIZE=1</span><br><span class="line">SERVICE_PID_FILE=/var/run/shadowsocks.pid</span><br><span class="line">CONFIG=/etc/shadowsocks.json</span><br><span class="line"></span><br><span class="line">start() &#123;</span><br><span class="line">    service_start /usr/bin/ss-redir -c $CONFIG -b 0.0.0.0 -f $SERVICE_PID_FILE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stop() &#123;</span><br><span class="line">    service_stop /usr/bin/ss-redir</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>添加执行权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /etc/init.d/shadowsocks</span><br></pre></td></tr></table></figure>
+
+<p>运行并设置开机启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/shadowsocks enable</span><br><span class="line">/etc/init.d/shadowsocks start</span><br></pre></td></tr></table></figure>
+
+<p>参考 <a target="_blank" rel="noopener" href="https://gist.github.com/wen-long/8644243">这里</a>，我们可以先执行以下几条命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -t nat -N SHADOWSOCKS                                      # 新建链</span><br><span class="line">iptables -t nat -A SHADOWSOCKS -p tcp -j REDIRECT --to-ports 1080   # 插入重定向规则</span><br><span class="line">iptables -t nat -I PREROUTING -p tcp -j SHADOWSOCKS                 # 使得链生效</span><br></pre></td></tr></table></figure>
+
+<p>因此，不想走代理的 ip 只需要在重定向之前 return 就可以了</p>
+<p>参照上边链接里的介绍就能自定义规则了。当然，我希望默认是全部代理的模式，因为可以代理 ipv4 的流量，所以直接将代理全部的规则写入 <code>/etc/firewall.user</code> 中，保证开机时能自动加载。</p>
+<h3 id="DNS-配置"><a href="#DNS-配置" class="headerlink" title="DNS 配置"></a>DNS 配置</h3><p>下一个是关于 DNS 的配置。由于 shadowsocks 自带 <code>ss-tunnel</code> 命令，我们直接使用它进行 DNS 代理即可。</p>
+<p>修改 <code>/etc/init.d/shadowsocks</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh /etc/rc.common</span><br><span class="line"></span><br><span class="line">START=95</span><br><span class="line"></span><br><span class="line">SERVICE_USE_PID=1</span><br><span class="line">SERVICE_WRITE_PID=1</span><br><span class="line">SERVICE_DAEMONIZE=1</span><br><span class="line">SERVICE_PID_FILE=/var/run/shadowsocks.pid</span><br><span class="line">CONFIG=/etc/shadowsocks.json</span><br><span class="line"></span><br><span class="line">start() &#123;</span><br><span class="line">    service_start /usr/bin/ss-redir -c $CONFIG -b 0.0.0.0 -f $SERVICE_PID_FILE</span><br><span class="line">    service_start /usr/bin/ss-tunnel -c $CONFIG -b 0.0.0.0 -l 5353 -L 8.8.8.8:53 -u</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stop() &#123;</span><br><span class="line">    service_stop /usr/bin/ss-redir</span><br><span class="line">    service_stop /usr/bin/ss-tunnel</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>添加了两条关于 <code>ss-tunnel</code> 的命令。监听路由器 5353 端口，向 8.8.8.8:53 查询 DNS。<br>这时可以在电脑上执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig @192.168.1.1 -p 5353 www.google.com</span><br></pre></td></tr></table></figure>
+
+<p>验证程序是否正常执行。</p>
+<p>然后我们需要将 DNS 查询导向路由器 5353 端口。lede 的 DNS 查询是由 dnsmasq 负责的。</p>
+<p>修改 <code>/etc/dnsmasq.conf</code>，在最后加入 <code>conf-dir=/etc/dnsmasq.d</code>，让该程序读取我们的配置。</p>
+<p>接着在 <code>/etc/dnsmasq.d</code> 内新建文件 <code>proxy.conf</code>，加入一下一行规则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server=/#/127.0.0.1#5353</span><br></pre></td></tr></table></figure>
+
+<p>重启 <code>dnsmasq</code>，<code>/etc/init.d/dnsmasq restart</code></p>
+<p>这样所有向路由器 53 端口查询 DNS 的请求都会导向路由器 5353 端口，通过 <code>ss-tunnel</code> 进行查询。</p>
+<p>这样的话会有个小问题，就是所有 DNS 查询都会导向 vps，会比较慢，所以我们可以下载<a target="_blank" rel="noopener" href="https://github.com/softwaredownload/openwrt-fanqiang/blob/master/openwrt/default/etc/dnsmasq.d/accelerated-domains.china.conf">这里</a>的规则列表。同样放到这个文件夹中，优先匹配到的会直接向 <code>114.114.114.114</code> 查询，这样就能加速部分网站的域名解析过程。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>至此，整个配置流程就完成了。很多地方写得不够详细，只是有个大体思路而已。</p>
+<p>配置路由器还是很麻烦的，需要对 linux 和 网络有基本的了解，并且熟悉其中的各种命令，遇到问题能够通过自行调试解决。</p>
+<p>总的来说不适合小白（当我是个小白的时候完全不知所以，稍微有一个地方和教程不同就进行不下去了）。。还是找个程序员来配置吧。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/shadowsocks/">shadowsocks</a><a class="post-meta__tags" href="/tags/LEDE/">LEDE</a><a class="post-meta__tags" href="/tags/openwrt/">openwrt</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/05/29/webpack-%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/" title="webpack 搭建静态网站"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">webpack 搭建静态网站</div></div></a></div><div class="next-post pull-right"><a href="/2017/05/02/Docker-%E9%83%A8%E7%BD%B2-shadowsocks/" title="Docker 部署 shadowsocks"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Docker 部署 shadowsocks</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">pengchongfu</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/pengchongfu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:pengchongfu@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-LEDE"><span class="toc-number">1.</span> <span class="toc-text">安装 LEDE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-ipv6"><span class="toc-number">2.</span> <span class="toc-text">配置 ipv6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%82%E8%BD%BD-u%E7%9B%98"><span class="toc-number">3.</span> <span class="toc-text">挂载 u盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-shadowsocks"><span class="toc-number">4.</span> <span class="toc-text">安装 shadowsocks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-%E9%85%8D%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">DNS 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/15/%E5%AE%B6%E7%94%A8-nas-%E6%90%AD%E5%BB%BA/" title="家用 nas 搭建">家用 nas 搭建</a><time datetime="2024-04-15T07:54:34.000Z" title="发表于 2024-04-15 07:54:34">2024-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/22/%E4%BA%92%E8%81%94%E7%BD%91%E4%BA%A7%E5%93%81%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B/" title="互联网产品研发流程">互联网产品研发流程</a><time datetime="2024-02-22T13:59:56.000Z" title="发表于 2024-02-22 13:59:56">2024-02-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/" title="sing-box tun 模式介绍">sing-box tun 模式介绍</a><time datetime="2023-11-12T21:24:59.000Z" title="发表于 2023-11-12 21:24:59">2023-11-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/05/%E6%A0%91%E8%8E%93%E6%B4%BE%E9%85%8D%E7%BD%AE%E4%B8%BA%E4%BB%A3%E7%90%86%E7%BD%91%E5%85%B3/" title="树莓派配置为代理网关">树莓派配置为代理网关</a><time datetime="2023-10-05T11:12:00.000Z" title="发表于 2023-10-05 11:12:00">2023-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/03/04/LEDE-%E9%85%8D%E7%BD%AE-ipv6/" title="LEDE 配置 ipv6">LEDE 配置 ipv6</a><time datetime="2018-03-04T22:52:30.000Z" title="发表于 2018-03-04 22:52:30">2018-03-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2024 By pengchongfu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadDisqus () {
+  const disqus_config = function () {
+    this.page.url = 'http://blog.pengchongfu.com/2017/05/13/LEDE-%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/'
+    this.page.identifier = '/2017/05/13/LEDE-%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/'
+    this.page.title = 'LEDE 路由器配置记录'
+  }
+
+  const disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addModeChange('disqus', disqusReset)
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://pengchongfu.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Disqus' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Vue 源码学习-概览 | pengchongfu's blog</title><meta name="author" content="pengchongfu"><meta name="copyright" content="pengchongfu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="话说从开始写前端到现在也已经一年了，虽然每天写着业务代码，可是对 Vue 的核心还是不太了解。 只能在写出 bug 时有那么一点点的感悟，因此决定学学 Vue 的源码，希冀能获取一些人生的经验。 项目概览*Vue 版本为2.2.6之后的 dev 分支    文件夹 说明    .github github 相关说明   benchmarks 一些实例   build build 配置文件   di">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue 源码学习-概览">
+<meta property="og:url" content="http://blog.pengchongfu.com/2017/04/21/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-%E6%A6%82%E8%A7%88/index.html">
+<meta property="og:site_name" content="pengchongfu&#39;s blog">
+<meta property="og:description" content="话说从开始写前端到现在也已经一年了，虽然每天写着业务代码，可是对 Vue 的核心还是不太了解。 只能在写出 bug 时有那么一点点的感悟，因此决定学学 Vue 的源码，希冀能获取一些人生的经验。 项目概览*Vue 版本为2.2.6之后的 dev 分支    文件夹 说明    .github github 相关说明   benchmarks 一些实例   build build 配置文件   di">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.pengchongfu.com/img/avatar.jpg">
+<meta property="article:published_time" content="2017-04-21T17:21:15.000Z">
+<meta property="article:modified_time" content="2024-04-26T01:19:29.070Z">
+<meta property="article:author" content="pengchongfu">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.pengchongfu.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://blog.pengchongfu.com/2017/04/21/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-%E6%A6%82%E8%A7%88/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Vue 源码学习-概览',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-26 01:19:29'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="pengchongfu's blog"><span class="site-name">pengchongfu's blog</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Vue 源码学习-概览</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2017-04-21T17:21:15.000Z" title="发表于 2017-04-21 17:21:15">2017-04-21</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>话说从开始写前端到现在也已经一年了，虽然每天写着业务代码，可是对 Vue 的核心还是不太了解。</p>
+<p>只能在写出 bug 时有那么一点点的感悟，因此决定学学 Vue 的源码，希冀能获取一些人生的经验。</p>
+<h3 id="项目概览"><a href="#项目概览" class="headerlink" title="项目概览"></a>项目概览</h3><p>*<em>Vue 版本为2.2.6之后的 dev 分支</em></p>
+<table>
+<thead>
+<tr>
+<th>文件夹</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.github</td>
+<td>github 相关说明</td>
+</tr>
+<tr>
+<td>benchmarks</td>
+<td>一些实例</td>
+</tr>
+<tr>
+<td>build</td>
+<td>build 配置文件</td>
+</tr>
+<tr>
+<td>dist</td>
+<td>build 产生的文件</td>
+</tr>
+<tr>
+<td>examples</td>
+<td>一些例子</td>
+</tr>
+<tr>
+<td>flow</td>
+<td>flow 文件</td>
+</tr>
+<tr>
+<td>packages</td>
+<td>不同平台的 compiler 文件</td>
+</tr>
+<tr>
+<td>src</td>
+<td>源码核心文件</td>
+</tr>
+<tr>
+<td>test</td>
+<td>测试文件</td>
+</tr>
+<tr>
+<td>types</td>
+<td>类型定义</td>
+</tr>
+</tbody></table>
+<p>可以看出最核心的代码应该是 <code>src</code> 文件夹内的代码。而 Vue 初始化一个 app 的方法为 <code>new Vue()</code>，因此首先得找出 <code>Vue</code> 函数的定义位置。<br>为了简化阅读源码的难度，直接选择 web-runtime-esm 版本（ compiler 可以熟悉 runtime 之后再学习）</p>
+<p>因此我们从 build 命令开始一步一步地寻找：</p>
+<ol>
+<li>package.json <code>&quot;build&quot;: &quot;node build/build.js&quot;</code></li>
+<li>build&#x2F;build.js 读取 <code>./config</code> 内容循环 build</li>
+<li>build&#x2F;config.js 可以看到 web-runtime-esm 的入口文件为 <code>web/runtime.js</code></li>
+<li>src&#x2F;platforms&#x2F;web&#x2F;runtime.js 从 <code>./runtime/index</code> 导入</li>
+<li>src&#x2F;platforms&#x2F;web&#x2F;runtime&#x2F;index.js 从 <code>core/index</code> 导入，同时在 Vue 原型链上注册 <code>__patch__</code> 和 <code>$mount</code> 函数</li>
+<li>src&#x2F;core&#x2F;index.js 从 <code>./instance/index</code> 导入，同时 <code>initGlobalAPI</code></li>
+<li>src&#x2F;core&#x2F;instance&#x2F;index.js 这里定义了 Vue 函数，并且 Vue 函数执行了 <code>this._init(options)</code>，所以这是初始化的关键。</li>
+</ol>
+<p>先跳过 Vue 实例初始化的过程，接下来我们对后边的几个函数进行详细的分析。</p>
+<h3 id="Vue-函数初始化流程"><a href="#Vue-函数初始化流程" class="headerlink" title="Vue 函数初始化流程"></a>Vue 函数初始化流程</h3><h4 id="initMixin"><a href="#initMixin" class="headerlink" title="initMixin"></a>initMixin</h4><p>这个函数只做了一件事，那就是向 Vue 的原型链上注册了 <code>_init</code> 函数，而在 Vue 实例 init 的过程中，分别执行了</p>
+<ul>
+<li>initLifecycle</li>
+<li>initEvents</li>
+<li>initRender</li>
+<li>initInjections</li>
+<li>initState</li>
+<li>initProvide</li>
+</ul>
+<p>并且在这个过程中执行了 <code>beforeCreate</code> 和 <code>created</code> 的回调，并且最后执行了 <code>$mount</code> 函数将实例挂载到 DOM 上。<br>关于 Vue 实例初始化的过程待会再进行学习，先继续分析 Vue 函数的初始化</p>
+<h4 id="stateMixin"><a href="#stateMixin" class="headerlink" title="stateMixin"></a>stateMixin</h4><p>首先定义了 Vue 原型链上的 <code>$data</code> 和 <code>$props</code>，并设置 get 和 set 函数。</p>
+<p>接着定义了 <code>$set</code> 和 <code>$del</code>。这两个方法主要是自己定义一些响应式的对象。</p>
+<p>最后是 <code>$watch</code> 函数，提供了动态创建 Watcher 的方法</p>
+<h4 id="eventsMixin"><a href="#eventsMixin" class="headerlink" title="eventsMixin"></a>eventsMixin</h4><p>主要是往 Vue 的原型链上注册了 <code>$on</code> <code>$once</code> <code>off</code> <code>emit</code> 函数。这几个函数与 Vue 里边的指令关系十分密切。</p>
+<h4 id="lifecycleMixin"><a href="#lifecycleMixin" class="headerlink" title="lifecycleMixin"></a>lifecycleMixin</h4><p>注册了 <code>_update</code> <code>$forceUpdate</code> <code>$destroy</code> 三个函数。</p>
+<p>其中 <code>_update</code> 函数十分重要，是接收 VNode（也就是虚拟 DOM）更新 DOM 的重要部分。<br>而 <code>_update</code> 函数中除了执行 <code>_beforeUpdate</code> 回调以外， 最主要的功能是通过 <code>__patch__</code> 更新 DOM。</p>
+<p><code>$forceUpdate</code> 函数执行了 <code>vm._watcher.update()</code>，从其他代码可知，组件实例上的 <code>_watcher</code> 是一个专门用于更新 DOM 的 Watcher。</p>
+<p><code>$destroy</code> 函数执行了 <code>beforeDestroy</code> 和 <code>destroyed</code> 回调。并且从父实例中移除了自己，销毁了实例上的 Watcher，更新了 DOM。</p>
+<h4 id="renderMixin"><a href="#renderMixin" class="headerlink" title="renderMixin"></a>renderMixin</h4><p>同样是往原型链上添加一些函数。</p>
+<p><code>$nextTick</code> 这个函数可以看成是在当前事件循环之后执行回调的一个函数，也就是 <code>setTimeout(callback, 0)</code></p>
+<p><code>_render</code> 这个函数同样是很关键的一个函数，通过 Vue 实例生成 VNode。</p>
+<p>到这里 Vue 函数的初始化过程就基本完成了，可以看出基本是在 Vue 原型链上注册一些函数，而这些函数会在 Vue 实例的生命周期中用到。</p>
+<p>那 <code>__patch__</code> 和 <code>$mount</code> 为什么不在这个过程中呢？主要是因为 Vue 会有不同平台（web 和 weex）以及不同的版本（runtime 或者 compiler）。</p>
+<h3 id="Vue-实例初始化流程"><a href="#Vue-实例初始化流程" class="headerlink" title="Vue 实例初始化流程"></a>Vue 实例初始化流程</h3><h4 id="initLifecycle"><a href="#initLifecycle" class="headerlink" title="initLifecycle"></a>initLifecycle</h4><p>在实例上定义一些变量，如 <code>$parent</code> <code>$root</code> <code>children</code>，一些标识符也在这里定义 <code>_isMounted</code> <code>_isDestroyed</code>。同时 <code>_watcher</code> 也被声明。</p>
+<h4 id="initEvents"><a href="#initEvents" class="headerlink" title="initEvents"></a>initEvents</h4><p>貌似是从父组件继承一些 Listener。</p>
+<h4 id="initRender"><a href="#initRender" class="headerlink" title="initRender"></a>initRender</h4><p>定义 <code>$createElement</code> 函数</p>
+<h4 id="initInjections"><a href="#initInjections" class="headerlink" title="initInjections"></a>initInjections</h4><p>用得比较少，略过</p>
+<h4 id="initState"><a href="#initState" class="headerlink" title="initState"></a>initState</h4><p>这里是 Vue 响应式的核心部分。核心代码都在 <code>src/core/instance/state.js</code> 中</p>
+<h4 id="initProvide"><a href="#initProvide" class="headerlink" title="initProvide"></a>initProvide</h4><p>略过</p>
+<h4 id="mount"><a href="#mount" class="headerlink" title="$mount"></a>$mount</h4><p>这是和 DOM 更新息息相关的部分。初始化过程中，得通过这个函数挂载到 DOM 上，而核心代码为 <code>src/core/instance/lifecycle.js</code> 的 <code>mountComponent</code> 函数。</p>
+<p>在这个函数里边使得 <code>vm._watcher</code> 等于一个 Watcher，而这个 Watcher 会在必要的时候执行，调用更新函数 <code>vm._update(vm._render(), hydrating)</code> 以更新 DOM。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上就是 Vue 的一个大致概览。这么看下来 Vue 源码的这几个部分需要细细阅读：</p>
+<ol>
+<li>数据监听部分</li>
+<li>Dom 更新部分</li>
+<li>组件之间的交互部分</li>
+</ol>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Vue/">Vue</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/04/26/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/" title="Vue 源码学习-响应式原理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Vue 源码学习-响应式原理</div></div></a></div><div class="next-post pull-right"><a href="/2016/05/08/%E6%9F%A5%E7%9C%8B%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF/" title="查看微信消息"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">查看微信消息</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">pengchongfu</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/pengchongfu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:pengchongfu@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%A6%82%E8%A7%88"><span class="toc-number">1.</span> <span class="toc-text">项目概览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">Vue 函数初始化流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#initMixin"><span class="toc-number">2.1.</span> <span class="toc-text">initMixin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stateMixin"><span class="toc-number">2.2.</span> <span class="toc-text">stateMixin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eventsMixin"><span class="toc-number">2.3.</span> <span class="toc-text">eventsMixin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lifecycleMixin"><span class="toc-number">2.4.</span> <span class="toc-text">lifecycleMixin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#renderMixin"><span class="toc-number">2.5.</span> <span class="toc-text">renderMixin</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-%E5%AE%9E%E4%BE%8B%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">Vue 实例初始化流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#initLifecycle"><span class="toc-number">3.1.</span> <span class="toc-text">initLifecycle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#initEvents"><span class="toc-number">3.2.</span> <span class="toc-text">initEvents</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#initRender"><span class="toc-number">3.3.</span> <span class="toc-text">initRender</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#initInjections"><span class="toc-number">3.4.</span> <span class="toc-text">initInjections</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#initState"><span class="toc-number">3.5.</span> <span class="toc-text">initState</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#initProvide"><span class="toc-number">3.6.</span> <span class="toc-text">initProvide</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mount"><span class="toc-number">3.7.</span> <span class="toc-text">$mount</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/15/%E5%AE%B6%E7%94%A8-nas-%E6%90%AD%E5%BB%BA/" title="家用 nas 搭建">家用 nas 搭建</a><time datetime="2024-04-15T07:54:34.000Z" title="发表于 2024-04-15 07:54:34">2024-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/22/%E4%BA%92%E8%81%94%E7%BD%91%E4%BA%A7%E5%93%81%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B/" title="互联网产品研发流程">互联网产品研发流程</a><time datetime="2024-02-22T13:59:56.000Z" title="发表于 2024-02-22 13:59:56">2024-02-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/" title="sing-box tun 模式介绍">sing-box tun 模式介绍</a><time datetime="2023-11-12T21:24:59.000Z" title="发表于 2023-11-12 21:24:59">2023-11-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/05/%E6%A0%91%E8%8E%93%E6%B4%BE%E9%85%8D%E7%BD%AE%E4%B8%BA%E4%BB%A3%E7%90%86%E7%BD%91%E5%85%B3/" title="树莓派配置为代理网关">树莓派配置为代理网关</a><time datetime="2023-10-05T11:12:00.000Z" title="发表于 2023-10-05 11:12:00">2023-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/03/04/LEDE-%E9%85%8D%E7%BD%AE-ipv6/" title="LEDE 配置 ipv6">LEDE 配置 ipv6</a><time datetime="2018-03-04T22:52:30.000Z" title="发表于 2018-03-04 22:52:30">2018-03-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2024 By pengchongfu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadDisqus () {
+  const disqus_config = function () {
+    this.page.url = 'http://blog.pengchongfu.com/2017/04/21/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-%E6%A6%82%E8%A7%88/'
+    this.page.identifier = '/2017/04/21/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-%E6%A6%82%E8%A7%88/'
+    this.page.title = 'Vue 源码学习-概览'
+  }
+
+  const disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addModeChange('disqus', disqusReset)
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://pengchongfu.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Disqus' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

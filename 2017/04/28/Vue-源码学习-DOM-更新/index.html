@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Vue 源码学习- DOM 更新 | pengchongfu's blog</title><meta name="author" content="pengchongfu"><meta name="copyright" content="pengchongfu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="上一篇文章介绍了 Vue 是如何实现响应式的。响应式带来的最大好处就是自动地更新 DOM，无需手动操作 DOM。所有状态都在 Vue 实例中保存。 而提到更新 DOM，我们自然会想到 react 提出的虚拟 DOM。也就是在 js 中记录 DOM 的状态。当虚拟 DOM 接收到更新请求时，会做一些优化处理，再改变 DOM。由于 DOM 操作是很慢的，所以引入虚拟 DOM 带来的开支还是可以接受的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue 源码学习- DOM 更新">
+<meta property="og:url" content="http://blog.pengchongfu.com/2017/04/28/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-DOM-%E6%9B%B4%E6%96%B0/index.html">
+<meta property="og:site_name" content="pengchongfu&#39;s blog">
+<meta property="og:description" content="上一篇文章介绍了 Vue 是如何实现响应式的。响应式带来的最大好处就是自动地更新 DOM，无需手动操作 DOM。所有状态都在 Vue 实例中保存。 而提到更新 DOM，我们自然会想到 react 提出的虚拟 DOM。也就是在 js 中记录 DOM 的状态。当虚拟 DOM 接收到更新请求时，会做一些优化处理，再改变 DOM。由于 DOM 操作是很慢的，所以引入虚拟 DOM 带来的开支还是可以接受的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.pengchongfu.com/img/avatar.jpg">
+<meta property="article:published_time" content="2017-04-28T11:33:23.000Z">
+<meta property="article:modified_time" content="2024-04-26T01:19:29.070Z">
+<meta property="article:author" content="pengchongfu">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.pengchongfu.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://blog.pengchongfu.com/2017/04/28/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-DOM-%E6%9B%B4%E6%96%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Vue 源码学习- DOM 更新',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-26 01:19:29'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="pengchongfu's blog"><span class="site-name">pengchongfu's blog</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Vue 源码学习- DOM 更新</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2017-04-28T11:33:23.000Z" title="发表于 2017-04-28 11:33:23">2017-04-28</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>上一篇<a href="/post/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/">文章</a>介绍了 Vue 是如何实现响应式的。响应式带来的最大好处就是自动地更新 DOM，无需手动操作 DOM。所有状态都在 Vue 实例中保存。</p>
+<p>而提到更新 DOM，我们自然会想到 react 提出的虚拟 DOM。也就是在 js 中记录 DOM 的状态。当虚拟 DOM 接收到更新请求时，会做一些优化处理，再改变 DOM。由于 DOM 操作是很慢的，所以引入虚拟 DOM 带来的开支还是可以接受的。</p>
+<p>Vue 1.0 中是没有虚拟 DOM 的，2.0 版本中引入了这一功能，在 Vue 中，虚拟 DOM 的构造类为 VNode。</p>
+<h3 id="VNode"><a href="#VNode" class="headerlink" title="VNode"></a>VNode</h3><p>上一篇文章中提到，更新 DOM 执行的是这样一个 Watcher</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">updateComponent = () =&gt; &#123;</span><br><span class="line">  vm._update(vm._render(), hydrating)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而 <code>Vue.prototype._render</code> 的返回值正是 VNode。</p>
+<p>核心代码为 <code>vnode = render.call(vm._renderProxy, vm.$createElement)</code><br>其中 <code>render</code> 就是通过 <code>template</code> 编译成的渲染函数，也就是 jsx 写法中的 <code>render</code>，<code>vm._renderProxy</code> 其实就是 <code>vm</code> 本身，<code>vm.$createElement</code> 是在 <code>initRender</code> 时定义在 <code>vm</code> 上的函数。因此，关键在于 <code>vm.$createElement</code> 的内容</p>
+<h4 id="createElement"><a href="#createElement" class="headerlink" title="createElement"></a><code>createElement</code></h4><p>代码在 <code>src/core/vdom/create-element.js</code> 中</p>
+<p>可以看到这里进行了各种各样的 <code>if else</code> 判断。大概的逻辑是：</p>
+<ul>
+<li>不合法的话返回 emptyVNode</li>
+<li>必要的调用 <code>createComponent</code> 创建组件</li>
+<li>返回 VNode</li>
+</ul>
+<p>VNode 的构造函数很简单，基本就是一个大对象。所以我们重点看看 <code>createComponent</code></p>
+<h4 id="createComponent"><a href="#createComponent" class="headerlink" title="createComponent"></a><code>createComponent</code></h4><p><code>createComponent</code> 这个函数主要是用于创建组件实例对应的 VNode。</p>
+<p>在这个函数中主要实现以下几个功能：</p>
+<ul>
+<li>调用 <code>Vue.extend</code> 生成组件构造函数</li>
+<li>根据 data 的内容生成新的 <code>vm</code> 实例构造函数，在这一步最关键的是将 props 还有 on 事件定义好。（注意，这里并没有执行初始化的过程，只是生成了实例的构造函数）</li>
+<li>返回在父组件中用于占位的 VNode</li>
+</ul>
+<p>在更进一步地了解之后，我们可以知道其实，<strong>每一个 VNode 对应 DOM 中的一个标签</strong>，当然具体内容会待会细说。</p>
+<h3 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h3><p>生成了 VNode 之后，需要调用 <code>vm._update</code> 将 VNode 更新到 DOM 上。</p>
+<p>在 <code>lifecycleMixin</code> 中，<code>vm_update</code> 调用 <code>vm.__patch__</code> 输入 VNode 并且返回 DOM。<br>在经过查找之后，发现关键代码在 <code>src/core/vdom/patch.js</code> 中</p>
+<p>这个文件的代码有 600 行。。比较复杂，对应不同的情况会有不同的处理措施。只看看几个关键的函数</p>
+<h4 id="function-patch"><a href="#function-patch" class="headerlink" title="function patch"></a>function patch</h4><ul>
+<li>调用 <code>invokeDestroyHook</code> 删除 VNode 和 DOM</li>
+<li>调用 <code>patchVnode</code> 对 VNode 进行 patch 并且更新 DOM</li>
+<li>调用 <code>createElm</code> 生成 DOM 并且挂载到指定元素上</li>
+</ul>
+<h4 id="function-createElm"><a href="#function-createElm" class="headerlink" title="function createElm"></a>function createElm</h4><p>这个函数主要执行生成 DOM 的工作， 关键函数为：</p>
+<ul>
+<li><code>createElement</code> 生成 DOM（其实就是调用了浏览器的 <code>document.createElement</code>）</li>
+<li><code>createComponent</code>，如果 Vnode 里是一个组件的话，会执行之前生成的实例的构造函数，进行组件的 <code>init</code> 过程，最后当然也是生成 DOM</li>
+<li><code>createChildren</code>，对   <code>children</code> 数组中的 VNode 循环调用 <code>createElm</code> 生成 DOM（这一步也是 Vue DOM 更新的关键，正是有这一步，Vue 才能将整个 DOM 树给<strong>递归</strong>生成）</li>
+</ul>
+<h4 id="function-patchVnode"><a href="#function-patchVnode" class="headerlink" title="function patchVnode"></a>function patchVnode</h4><p>有不同的策略：</p>
+<ul>
+<li>静态 Vnode 复用之前生成好的 DOM，返回</li>
+<li>对 VNode 对应的 vm 进行 <code>prepatch</code>（这一步很关键，就是在这一步，props 得以在组件树中进行传递，触发子组件的 Watcher），执行 <code>updateChildren</code>，返回</li>
+<li>执行 <code>updateChildren</code> 返回</li>
+</ul>
+<p><code>patchVnode</code> 以及 <code>updateChildren</code> 中有一些 diff 更新策略，此处不讲</p>
+<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><p>用一个简单的<a target="_blank" rel="noopener" href="http://codepen.io/pengchongfu/pen/ybMpew">例子</a>说明一下 DOM 的生成流程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&quot;com&quot;, &#123;</span><br><span class="line">  render(h) &#123;</span><br><span class="line">    return h(&quot;span&quot;, &#123;</span><br><span class="line">      domProps: &#123;</span><br><span class="line">        innerHTML: &quot;this is com&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(&quot;extend component&quot;);</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &quot;#app&quot;,</span><br><span class="line">  render(h) &#123;</span><br><span class="line">    return h(&quot;div&quot;, &#123;&#125;, [h(&quot;h1&quot;, &quot;this is h1&quot;), h(&quot;com&quot;)]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>假设我们在组件 <code>_render</code> <code>_update</code> 开始和结束时以及创建 VNode 时都加上标记，输出结果会是怎么样的？</p>
+<p>输出结果为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">new VNode: tag is                       // **不知道为啥加载 Vue 时会生成 VNode**</span><br><span class="line">extend component                        // ---</span><br><span class="line">_render start                           // 根实例开始执行 `_render`</span><br><span class="line">new VNode: tag is undefined             // **不知道这是为什么生成的**</span><br><span class="line">new VNode: tag is h1                    // 根实例生成 `children` 数组中的第一个 VNode，h1</span><br><span class="line">new VNode: tag is vue-component-1-com   // 根实例生成 `children` 数组中的第二个 VNode，组件 com</span><br><span class="line">new VNode: tag is div                   // 根实例生成自身 VNode， div</span><br><span class="line">_render end                             // 根实例 `_render` 结束</span><br><span class="line">_update start div                       // 根实例开始执行 `_update`</span><br><span class="line">new VNode: tag is div                   // 清空 html 中 #app div，并且创建空的 div 代替</span><br><span class="line">_render start                           // com 实例开始执行 `_render`</span><br><span class="line">new VNode: tag is span                  // com 实例生成自身 VNode， span（因为 com 实例没有 children）</span><br><span class="line">_render end                             // com 实例 `_render` 结束</span><br><span class="line">_update start span                      // com 实例开始执行 `_update`</span><br><span class="line">_update end span                        // com 实例 `_update` 结束</span><br><span class="line">_update end div                         // 根实例 `_update` 结束</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上就是 Vue 实现 DOM 更新的一些要点，当然还有很多细节没有提及。</p>
+<p>其中很值得看的就是虚拟 DOM patch 的部分。合理的 patch 能够大大减少操作 DOM 浪费的时间。</p>
+<p>当然组件间信息传递部分的实现也是十分重要的。这会在下一篇文章中介绍。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Vue/">Vue</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/04/29/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" title="Vue 源码学习-组件通信"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Vue 源码学习-组件通信</div></div></a></div><div class="next-post pull-right"><a href="/2017/04/26/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/" title="Vue 源码学习-响应式原理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Vue 源码学习-响应式原理</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">pengchongfu</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/pengchongfu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:pengchongfu@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#VNode"><span class="toc-number">1.</span> <span class="toc-text">VNode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#createElement"><span class="toc-number">1.1.</span> <span class="toc-text">createElement</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#createComponent"><span class="toc-number">1.2.</span> <span class="toc-text">createComponent</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#patch"><span class="toc-number">2.</span> <span class="toc-text">patch</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#function-patch"><span class="toc-number">2.1.</span> <span class="toc-text">function patch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#function-createElm"><span class="toc-number">2.2.</span> <span class="toc-text">function createElm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#function-patchVnode"><span class="toc-number">2.3.</span> <span class="toc-text">function patchVnode</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E4%BE%8B%E5%AD%90"><span class="toc-number">3.</span> <span class="toc-text">简单例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/15/%E5%AE%B6%E7%94%A8-nas-%E6%90%AD%E5%BB%BA/" title="家用 nas 搭建">家用 nas 搭建</a><time datetime="2024-04-15T07:54:34.000Z" title="发表于 2024-04-15 07:54:34">2024-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/22/%E4%BA%92%E8%81%94%E7%BD%91%E4%BA%A7%E5%93%81%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B/" title="互联网产品研发流程">互联网产品研发流程</a><time datetime="2024-02-22T13:59:56.000Z" title="发表于 2024-02-22 13:59:56">2024-02-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/" title="sing-box tun 模式介绍">sing-box tun 模式介绍</a><time datetime="2023-11-12T21:24:59.000Z" title="发表于 2023-11-12 21:24:59">2023-11-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/05/%E6%A0%91%E8%8E%93%E6%B4%BE%E9%85%8D%E7%BD%AE%E4%B8%BA%E4%BB%A3%E7%90%86%E7%BD%91%E5%85%B3/" title="树莓派配置为代理网关">树莓派配置为代理网关</a><time datetime="2023-10-05T11:12:00.000Z" title="发表于 2023-10-05 11:12:00">2023-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/03/04/LEDE-%E9%85%8D%E7%BD%AE-ipv6/" title="LEDE 配置 ipv6">LEDE 配置 ipv6</a><time datetime="2018-03-04T22:52:30.000Z" title="发表于 2018-03-04 22:52:30">2018-03-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2024 By pengchongfu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadDisqus () {
+  const disqus_config = function () {
+    this.page.url = 'http://blog.pengchongfu.com/2017/04/28/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-DOM-%E6%9B%B4%E6%96%B0/'
+    this.page.identifier = '/2017/04/28/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-DOM-%E6%9B%B4%E6%96%B0/'
+    this.page.title = 'Vue 源码学习- DOM 更新'
+  }
+
+  const disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addModeChange('disqus', disqusReset)
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://pengchongfu.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Disqus' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

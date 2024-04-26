@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>sing-box tun 模式介绍 | pengchongfu's blog</title><meta name="author" content="pengchongfu"><meta name="copyright" content="pengchongfu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="上一篇文章中介绍了使用 clash 将树莓派配置为代理网关的方案，但因为众所周知的原因，clash 已经删库了。并且开源版的 clash 并不支持 tun 模式。而不管是 redirect、tproxy 都需要修改树莓派的防火墙配置，步骤较为繁琐。因此本文介绍一下 sing-box 这个项目的安装使用。sing-box 有以下优点：  支持 tun 支持 iOS（以及其他 apple 设备）  安">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sing-box tun 模式介绍">
+<meta property="og:url" content="http://blog.pengchongfu.com/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="pengchongfu&#39;s blog">
+<meta property="og:description" content="上一篇文章中介绍了使用 clash 将树莓派配置为代理网关的方案，但因为众所周知的原因，clash 已经删库了。并且开源版的 clash 并不支持 tun 模式。而不管是 redirect、tproxy 都需要修改树莓派的防火墙配置，步骤较为繁琐。因此本文介绍一下 sing-box 这个项目的安装使用。sing-box 有以下优点：  支持 tun 支持 iOS（以及其他 apple 设备）  安">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.pengchongfu.com/img/avatar.jpg">
+<meta property="article:published_time" content="2023-11-12T21:24:59.000Z">
+<meta property="article:modified_time" content="2024-04-26T01:19:29.070Z">
+<meta property="article:author" content="pengchongfu">
+<meta property="article:tag" content="代理">
+<meta property="article:tag" content="sing-box">
+<meta property="article:tag" content="树莓派">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.pengchongfu.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://blog.pengchongfu.com/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'sing-box tun 模式介绍',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-26 01:19:29'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="pengchongfu's blog"><span class="site-name">pengchongfu's blog</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">sing-box tun 模式介绍</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2023-11-12T21:24:59.000Z" title="发表于 2023-11-12 21:24:59">2023-11-12</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><p>上一篇文章中介绍了使用 clash 将树莓派配置为代理网关的方案，但因为众所周知的原因，clash 已经删库了。并且开源版的 clash 并不支持 tun 模式。<br>而不管是 redirect、tproxy 都需要修改树莓派的防火墙配置，步骤较为繁琐。因此本文介绍一下 sing-box 这个项目的安装使用。<br>sing-box 有以下优点：</p>
+<ul>
+<li>支持 tun</li>
+<li>支持 iOS（以及其他 apple 设备）</li>
+</ul>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>参考 <a target="_blank" rel="noopener" href="https://sing-box.sagernet.org/examples/linux-server-installation/">sing-box</a> 安装教程安装到树莓派上（安装教程会自动生成 systemd 配置）。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;dns&quot;: &#123;</span><br><span class="line">        &quot;servers&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;tag&quot;: &quot;aliyun&quot;,</span><br><span class="line">                &quot;address&quot;: &quot;223.5.5.5&quot;,</span><br><span class="line">                &quot;detour&quot;: &quot;direct&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;tag&quot;: &quot;fakeip&quot;,</span><br><span class="line">                &quot;address&quot;: &quot;fakeip&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        &quot;rules&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;domain_suffix&quot;: [</span><br><span class="line">                    &quot;.cn&quot;</span><br><span class="line">                ],</span><br><span class="line">                &quot;geosite&quot;: [</span><br><span class="line">                    &quot;cn&quot;,</span><br><span class="line">                    &quot;apple-cn&quot;</span><br><span class="line">                ],</span><br><span class="line">                &quot;server&quot;: &quot;aliyun&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;outbound&quot;: &quot;any&quot;,</span><br><span class="line">                &quot;server&quot;: &quot;aliyun&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;query_type&quot;: [</span><br><span class="line">                    &quot;A&quot;,</span><br><span class="line">                    &quot;AAAA&quot;</span><br><span class="line">                ],</span><br><span class="line">                &quot;server&quot;: &quot;fakeip&quot;,</span><br><span class="line">                &quot;rewrite_ttl&quot;: 10</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        &quot;fakeip&quot;: &#123;</span><br><span class="line">            &quot;enabled&quot;: true,</span><br><span class="line">            &quot;inet4_range&quot;: &quot;198.18.0.0/15&quot;,</span><br><span class="line">            &quot;inet6_range&quot;: &quot;fc00::/18&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;independent_cache&quot;: true</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;route&quot;: &#123;</span><br><span class="line">        &quot;final&quot;: &quot;proxy&quot;,</span><br><span class="line">        &quot;auto_detect_interface&quot;: true,</span><br><span class="line">        &quot;geoip&quot;: &#123;</span><br><span class="line">            &quot;download_url&quot;: &quot;https://github.com/soffchen/sing-geoip/releases/latest/download/geoip.db&quot;,</span><br><span class="line">            &quot;download_detour&quot;: &quot;proxy&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;geosite&quot;: &#123;</span><br><span class="line">            &quot;download_url&quot;: &quot;https://github.com/soffchen/sing-geosite/releases/latest/download/geosite.db&quot;,</span><br><span class="line">            &quot;download_detour&quot;: &quot;proxy&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;rules&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;protocol&quot;: &quot;dns&quot;,</span><br><span class="line">                &quot;outbound&quot;: &quot;dns-out&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;inbound&quot;: &quot;dns-in&quot;,</span><br><span class="line">                &quot;outbound&quot;: &quot;dns-out&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;domain_suffix&quot;: [</span><br><span class="line">                    &quot;.cn&quot;</span><br><span class="line">                ],</span><br><span class="line">                &quot;geosite&quot;: [</span><br><span class="line">                    &quot;cn&quot;,</span><br><span class="line">                    &quot;apple-cn&quot;</span><br><span class="line">                ],</span><br><span class="line">                &quot;geoip&quot;: [</span><br><span class="line">                    &quot;cn&quot;</span><br><span class="line">                ],</span><br><span class="line">                &quot;ip_cidr&quot;: [</span><br><span class="line">                    &quot;2000::/3&quot;</span><br><span class="line">                ],</span><br><span class="line">                &quot;outbound&quot;: &quot;direct&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;inbounds&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;tun&quot;,</span><br><span class="line">            &quot;tag&quot;: &quot;tun&quot;,</span><br><span class="line">            &quot;inet4_address&quot;: &quot;172.19.0.1/30&quot;,</span><br><span class="line">            &quot;inet6_address&quot;: &quot;fdfe:dcba:9876::1/126&quot;,</span><br><span class="line">            &quot;auto_route&quot;: true,</span><br><span class="line">            &quot;sniff&quot;: true</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;direct&quot;,</span><br><span class="line">            &quot;tag&quot;: &quot;dns-in&quot;,</span><br><span class="line">            &quot;listen&quot;: &quot;::&quot;,</span><br><span class="line">            &quot;listen_port&quot;: 53</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;outbounds&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;direct&quot;,</span><br><span class="line">            &quot;tag&quot;: &quot;direct&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;dns&quot;,</span><br><span class="line">            &quot;tag&quot;: &quot;dns-out&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;shadowsocks&quot;,</span><br><span class="line">            &quot;tag&quot;: &quot;proxy&quot;,</span><br><span class="line">            &quot;server&quot;: &quot;server&quot;,</span><br><span class="line">            &quot;server_port&quot;: server_port,</span><br><span class="line">            &quot;method&quot;: &quot;method&quot;,</span><br><span class="line">            &quot;password&quot;: &quot;password&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是一份比较简单的分流配置，将 <code>&quot;tag&quot;: &quot;proxy&quot;</code> 处修改为你自己的代理配置，然后重启 sing-box。这时候应该能正常运行，可以访问相应的网站</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ curl google.com</span><br><span class="line">&lt;HTML&gt;&lt;HEAD&gt;&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;</span><br><span class="line">&lt;TITLE&gt;301 Moved&lt;/TITLE&gt;&lt;/HEAD&gt;&lt;BODY&gt;</span><br><span class="line">&lt;H1&gt;301 Moved&lt;/H1&gt;</span><br><span class="line">The document has moved</span><br><span class="line">&lt;A HREF=&quot;http://www.google.com/&quot;&gt;here&lt;/A&gt;.</span><br><span class="line">&lt;/BODY&gt;&lt;/HTML&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="tun-模式原理"><a href="#tun-模式原理" class="headerlink" title="tun 模式原理"></a>tun 模式原理</h3><p>tun 可以简单理解成为一个网络接口。在 linux 中，防火墙负责对数据包做拦截、转换之类的处理。而数据包流向主要由策略路由和路由表负责。<br>我们查看一下策略路由：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ sudo ip rule</span><br><span class="line">0:	from all lookup local</span><br><span class="line">9000:	from all to 172.19.0.0/30 lookup 2022</span><br><span class="line">9001:	from all ipproto icmp goto 9010</span><br><span class="line">9002:	not from all dport 53 lookup main suppress_prefixlength 0</span><br><span class="line">9002:	not from all iif lo lookup 2022</span><br><span class="line">9002:	from 0.0.0.0 iif lo lookup 2022</span><br><span class="line">9002:	from 172.19.0.0/30 iif lo lookup 2022</span><br><span class="line">9010:	from all nop</span><br><span class="line">32766:	from all lookup main</span><br><span class="line">32767:	from all lookup default</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>第一行主要是负责处理发送到本机的数据包</li>
+<li>第二行将目的地址为 tun 所在子网的数据包，查询 2022 路由表</li>
+<li>第三行处理 icmp</li>
+<li>第四行将目的端口不为 53 的数据包，查询 main 路由表，并且 suppress_prefixlength 0 表示不匹配默认路由</li>
+<li>之后的几行都是查询 2022 路由表</li>
+</ol>
+<p>因此，当我们执行 <code>curl google.com</code> 时</p>
+<ol>
+<li>首先是本机到 dns 服务器的 dns 请求，会匹配到第五行查询 2022 路由表</li>
+<li>接着发起请求时，也会查询 2022 路由表</li>
+</ol>
+<p>那么让我们看一下 2022 路由表的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ sudo ip route show table 2022</span><br><span class="line">default dev tun0</span><br></pre></td></tr></table></figure>
+
+<p>可以看到非常简单，就是直接将所有数据包交由 tun 处理</p>
+<h3 id="sing-box-配置介绍"><a href="#sing-box-配置介绍" class="headerlink" title="sing-box 配置介绍"></a>sing-box 配置介绍</h3><p>首先，最好先简单阅读一遍官方文档。这样会有个大概印象。</p>
+<ul>
+<li><code>inbounds</code> 是数据包的输入。在上面的配置中只有一个 tun 模式的 inbound<ul>
+<li><code>auto_route</code> 会自动配置策略路由，也就是上面提到的</li>
+<li><code>sniff</code> 会嗅探出数据包对应的协议，以便在 <code>route</code> 中使用</li>
+</ul>
+</li>
+<li><code>outbounds</code> 是数据包的目的地。三个 outbound 中，direct 和 proxy 用于分流。国内流量走 direct，国外走 proxy。dns 为一个特殊的出口，可以看作是 <code>dns</code> 配置中对应的 dns 服务器</li>
+<li><code>dns</code> 可以看作一个 dns 服务器（虽然可能实际并不监听端口），<code>dns.rules</code> 对 dns 请求做分流，国内的 dns 请求走 tag 为 aliyun 的 dns 服务器（当然因为 outbound 中代理服务器的地址也可能是一个域名，因此 outbound 的 dns 请求也走这个），其他的 dns 请求走 tag 为 fakeip 的 dns 服务器，直接返回 fake ip 以减少没必要的请求</li>
+<li><code>route</code> 会对流量进行分流。<code>route.ruls</code> 中，嗅探结果为 dns 的数据包，路由到 tag 为 dns 的 outbound；请求国内域名、IP的，路由到 tag 为 direct 的 outbound; 其他的由 <code>route.final</code> 配置兜底，都发往 tag 为 proxy 的 outbound</li>
+</ul>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><ul>
+<li>需要注意的是，子网内的设备配置时，dns 服务器不能配置为路由器的地址。因为路由器在子网之内，dns 请求将直接发往路由器而不会发到配置的树莓派网关，没法做 dns 劫持</li>
+<li>此外，配置好之后，由于子网内设备的流量从默认的 <code>eth0</code> 网口转发到 sing-box 的 <code>tun</code> 网口，因此需要开启 linux 转发功能。编辑 <code>/etc/sysctl.conf</code> 将 <code>net.ipv4.ip_forward=1</code> 的注释去掉并重启树莓派</li>
+</ul>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BB%A3%E7%90%86/">代理</a><a class="post-meta__tags" href="/tags/sing-box/">sing-box</a><a class="post-meta__tags" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/02/22/%E4%BA%92%E8%81%94%E7%BD%91%E4%BA%A7%E5%93%81%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B/" title="互联网产品研发流程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">互联网产品研发流程</div></div></a></div><div class="next-post pull-right"><a href="/2023/10/05/%E6%A0%91%E8%8E%93%E6%B4%BE%E9%85%8D%E7%BD%AE%E4%B8%BA%E4%BB%A3%E7%90%86%E7%BD%91%E5%85%B3/" title="树莓派配置为代理网关"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">树莓派配置为代理网关</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">pengchongfu</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/pengchongfu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:pengchongfu@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tun-%E6%A8%A1%E5%BC%8F%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">tun 模式原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sing-box-%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.</span> <span class="toc-text">sing-box 配置介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PS"><span class="toc-number">5.</span> <span class="toc-text">PS</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/15/%E5%AE%B6%E7%94%A8-nas-%E6%90%AD%E5%BB%BA/" title="家用 nas 搭建">家用 nas 搭建</a><time datetime="2024-04-15T07:54:34.000Z" title="发表于 2024-04-15 07:54:34">2024-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/22/%E4%BA%92%E8%81%94%E7%BD%91%E4%BA%A7%E5%93%81%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B/" title="互联网产品研发流程">互联网产品研发流程</a><time datetime="2024-02-22T13:59:56.000Z" title="发表于 2024-02-22 13:59:56">2024-02-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/" title="sing-box tun 模式介绍">sing-box tun 模式介绍</a><time datetime="2023-11-12T21:24:59.000Z" title="发表于 2023-11-12 21:24:59">2023-11-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/05/%E6%A0%91%E8%8E%93%E6%B4%BE%E9%85%8D%E7%BD%AE%E4%B8%BA%E4%BB%A3%E7%90%86%E7%BD%91%E5%85%B3/" title="树莓派配置为代理网关">树莓派配置为代理网关</a><time datetime="2023-10-05T11:12:00.000Z" title="发表于 2023-10-05 11:12:00">2023-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/03/04/LEDE-%E9%85%8D%E7%BD%AE-ipv6/" title="LEDE 配置 ipv6">LEDE 配置 ipv6</a><time datetime="2018-03-04T22:52:30.000Z" title="发表于 2018-03-04 22:52:30">2018-03-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2024 By pengchongfu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadDisqus () {
+  const disqus_config = function () {
+    this.page.url = 'http://blog.pengchongfu.com/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/'
+    this.page.identifier = '/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/'
+    this.page.title = 'sing-box tun 模式介绍'
+  }
+
+  const disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addModeChange('disqus', disqusReset)
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://pengchongfu.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Disqus' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>pengchongfu's blog</title><meta name="author" content="pengchongfu"><meta name="copyright" content="pengchongfu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="pengchongfu&#39;s blog">
+<meta property="og:url" content="http://blog.pengchongfu.com/index.html">
+<meta property="og:site_name" content="pengchongfu&#39;s blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.pengchongfu.com/img/avatar.jpg">
+<meta property="article:author" content="pengchongfu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.pengchongfu.com/img/avatar.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://blog.pengchongfu.com/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'pengchongfu\'s blog',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-04-26 01:19:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="pengchongfu's blog"><span class="site-name">pengchongfu's blog</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/04/15/%E5%AE%B6%E7%94%A8-nas-%E6%90%AD%E5%BB%BA/" title="家用 nas 搭建">家用 nas 搭建</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-04-15T07:54:34.000Z" title="发表于 2024-04-15 07:54:34">2024-04-15</time></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/nas/">nas</a></span></div><div class="content">nas 是 network attached storage 的缩写，也就是网络附属存储。顾名思义，主要是用来提供存储功能的设备。对于家庭来说，可以用来存储拍摄的照片，下载的电影图书等资源；对于企业来说，可以用来存储公司的一些公共资料方便共享。本质上来说，nas 和普通的电脑没有什么区别，比如 nas 大厂群晖和威联通的操作系统底层都是 linux。对家庭场景来说，比如家庭影院的需求，智能家居管理的需求，我们需要一台不关机，功耗低的计算设备。这时可以有多种选择，每种选择都有其适用场景
+
+nas | 硬件上 nas 一般会附带好几个盘位，方便用户组建磁盘阵列，用来保护数据；软件上 nas 厂商会提供完整的套件，常用的文件备份家庭影院功能都能很好地满足
+nuc 小主机 | 硬件上 nuc 小主机没什么特别之处，一般比较小巧，并且网口较多适合做软路由；软件上基本都需要自己寻找开源的或者收费的自行搭建
+工控机 ｜ 硬件上工控机因为主要为工厂设计，各种散热比较好，但对于家庭场景来说没太大用处，当然网口较多也是优点，同时还有很多工业上用到的接口；软件上也是需要自行搭建
+树莓派 ｜ 树莓派主要是为了 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/02/22/%E4%BA%92%E8%81%94%E7%BD%91%E4%BA%A7%E5%93%81%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B/" title="互联网产品研发流程">互联网产品研发流程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-02-22T13:59:56.000Z" title="发表于 2024-02-22 13:59:56">2024-02-22</time></span></div><div class="content">最近一个其他行业的朋友想要了解一下互联网的研发流程，本文以程序员的视角来简单介绍一下。
+互联网公司的产品形态一般都是 app&#x2F;网页&#x2F;小程序，因此涉及的工作角色也比较多。
+
+产品经理最开始会想出一个 idea 并将其细化为产品需求文档
+产品经理就产品需求文档与设计师、程序员、DS（数据分析）、QA（测试） 讨论相关细节、时间排期
+设计师设计相关的 UI、UX；程序员写技术架构文档
+程序员开发、测试、联调
+提交 QA 进行测试，与产品经理、设计师一同测试，没问题之后上线
+DS 查询相关数据，并与产品经理讨论是否达到预期
+
+下面详细介绍一下
+产品需求产品经理会通过多种方式来确定一个新的需求，比如竞品调研、市场调研、头脑风暴。之后会写产品需求文档，涵盖一下内容
+
+需求的目标，如何评估是否达到预期
+对产品的改动，比如 UI 上的改动，功能的改动
+时间排期（需要与多方角色协商）
+
+产品经理部门内部会对需求文档进行评审，来确定是否真的实施
+产品需求细化接下来产品经理会与相关角色（设计师、程序员、DS、QA）进行评审，确定排期
+
+设计师会就 UX、UI 方面进行讨论，比如新功能的入 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/" title="sing-box tun 模式介绍">sing-box tun 模式介绍</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-12T21:24:59.000Z" title="发表于 2023-11-12 21:24:59">2023-11-12</time></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E4%BB%A3%E7%90%86/">代理</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/sing-box/">sing-box</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a></span></div><div class="content">上一篇文章中介绍了使用 clash 将树莓派配置为代理网关的方案，但因为众所周知的原因，clash 已经删库了。并且开源版的 clash 并不支持 tun 模式。而不管是 redirect、tproxy 都需要修改树莓派的防火墙配置，步骤较为繁琐。因此本文介绍一下 sing-box 这个项目的安装使用。sing-box 有以下优点：
+
+支持 tun
+支持 iOS（以及其他 apple 设备）
+
+安装参考 sing-box 安装教程安装到树莓派上（安装教程会自动生成 systemd 配置）。
+配置123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117&#123;  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/10/05/%E6%A0%91%E8%8E%93%E6%B4%BE%E9%85%8D%E7%BD%AE%E4%B8%BA%E4%BB%A3%E7%90%86%E7%BD%91%E5%85%B3/" title="树莓派配置为代理网关">树莓派配置为代理网关</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-10-05T11:12:00.000Z" title="发表于 2023-10-05 11:12:00">2023-10-05</time></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E4%BB%A3%E7%90%86/">代理</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/clash/">clash</a></span></div><div class="content">平时的工作生活中，访问一些国外网站是必不可少的。但在各个设备上配置代理客户端又过于繁琐，并且有可能有一些设备并没有对应架构的客户端可用。因此可以考虑将树莓派配置为代理网关，设备的流量由树莓派负责代理，并将国内外流量进行分流以优化体验。
+为什么不直接将无线路由器刷成 openwrt？
+无线路由器一般性能比较羸弱，跑代理软件容易出现性能问题
+树莓派自带系统为 debian，比较大众，容易操作、debug
+无线路由器刷了 openwrt 之后，需要较多的相关知识，一旦出现问题之后难以诊断，直接不能上网了；而将树莓派作为网关的方案，即使树莓派出现问题，依旧不影响基本的网络使用
+
+内网知识基础普及DNSDNS 负责解析域名，比如将 www.baidu.com 解析为对应的 v4&#x2F;v6 地址。这样数据包才能在网络中流动
+以下为 dig 命令向 114.114.114.114 请求 www.baidu.com 的地址
+123456789101112131415161718192021➜  ~ dig www.baidu.com @114.114.114.114; &lt;&lt;&gt;& ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2018/03/04/LEDE-%E9%85%8D%E7%BD%AE-ipv6/" title="LEDE 配置 ipv6">LEDE 配置 ipv6</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2018-03-04T22:52:30.000Z" title="发表于 2018-03-04 22:52:30">2018-03-04</time></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/shadowsocks/">shadowsocks</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/LEDE/">LEDE</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/ipv6/">ipv6</a></span></div><div class="content">生命不息，折腾不止。
+时间永是流驶，曾经美好的原生 ipv6 环境也失去了。所以只能通过 shadowsocks 的 socks5 代理连接到 ipv6，以下载北邮人的资源。
+但是在各个设备上配置总是一个麻烦事，因此考虑在路由器上进行配置。
+准备工作LEDE 默认情况下是开启了 ipv6 nat 的，查看一下设备是否成功分配到了 ipv6 地址，如果没有的话可以查查开如何开启 ipv6 nat。这一步很简单就不在这介绍了。
+配置 shadowsocks采用的方案其实和【用 shadowsocks ipv6 代理 ipv4 流量】的方案一样，只是现在变成了【用 shadowsocks ipv4 代理 ipv6 流量】。
+配置 ss-redirss-redir --help 可知 -b 选项可以设置监听的地址，因此我们需要设置 -b 0.0.0.0 -b :: 让 ss-redir 监听 ipv6 地址。配置好之后可以 netstat -nl 查看是否成功监听了对应端口。
+配置 ip6tables这一步也很简单，直接执行  
+1ip6tables -t nat -A PREROUTING  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2018/02/27/web-%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E8%AE%B0%E5%BD%95/" title="web 前端工程师面试记录">web 前端工程师面试记录</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2018-02-27T23:11:27.000Z" title="发表于 2018-02-27 23:11:27">2018-02-27</time></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a></span></div><div class="content">转眼间从事 web 前端的工作也快两年了。然而 web 前端纷繁复杂，发展日新月异；计算机的知识更是博大精深。
+自己所掌握和了解的知识点也很有限，平时写业务代码时也很少用到，唯有把面试中遇到的问题记录下来，以期将来有用 :)。
+DOM 相关盒模型盒子由 margin border padding content 4部分组成。box-sizing 为 content-box 的时候 width 为 content 的宽度，border-box 亦然。padding 会填充上对应的背景颜色，width: 100%时，宽度为所在容器的宽度。
+实现常见布局css 苦手，只能看平时的积累了。简单的三列布局可以用 float 实现。
+框架相关vue 响应式原理对 vue 来说，响应式的关键为 Object.defineProperty , get 的时候收集依赖项，set 的时候更新依赖项。
+网络相关同源跨域协议、域名、端口号。常见的允许跨域的有 script link img。
+jsonpjsonp 是很老的技术了，为了解决跨域的问题才出现的。需要传递 callback 的名字才可以正常执行。
+ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2017/05/29/webpack-%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/" title="webpack 搭建静态网站">webpack 搭建静态网站</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-05-29T14:01:15.000Z" title="发表于 2017-05-29 14:01:15">2017-05-29</time></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Vue/">Vue</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/webpack/">webpack</a></span></div><div class="content">最近需要给朋友搭建一个个人网站，会有比较多的图片用于展示。
+由于网站图片和内容可能会需要不时更新，直觉上用现有的个人网站框架例如 WordPress 之类的会方便一下。但是这样一来各种内容、图片都保存在数据库中管理起来不太直接。
+而且不管用什么框架前端界面都是需要高度定制的，不可能套用现有主题之类的。既然前端都是需要写的，因此决定先做个静态网站试试看，不好用的话再试试带后端的框架。
+本博客其实也是一个静态网站，用的是 hexo。但是考虑到 hexo 是个博客框架，因此似乎不怎么满足我的需求。
+尴尬的是我从学前端开始一直就是写的单页应用，完全没用自己搭建过静态网站，因此开始了以下坑爹的探索
+1. gulp + less + nunjucks这是公司官网的前端项目所用的框架。
+也就是打包工具用 gulp，样式用 less，模板用 nunjucks。
+gulpgulp 其实可以看成是一个任务管理器。将你需要执行的任务通过 gulp 一个一个地完成。这些任务其实直接写 node 的脚本其实也是能够完成的，只不过用 gulp 更方便了。
+例如打包 less，告诉 gulp 入口文件和出口文件就可 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2017/05/13/LEDE-%E8%B7%AF%E7%94%B1%E5%99%A8%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/" title="LEDE 路由器配置记录">LEDE 路由器配置记录</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-05-13T19:24:25.000Z" title="发表于 2017-05-13 19:24:25">2017-05-13</time></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/shadowsocks/">shadowsocks</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/LEDE/">LEDE</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/openwrt/">openwrt</a></span></div><div class="content">最近总有人问起我该如何配置 LEDE 路由器的网络代理功能。而想到我之前也帮好几个朋友配置过路由器，他们以后可能也需要了解了解关于这方面的知识。干脆从零开始写一个简单的配置记录吧。
+想起了 openwrt 的第一次接触，应该是大三的时候了吧。当时啥都不懂，连 linux 的基本操作都不会。但是想着能连接路由器用 ipv6，就给路由器刷上了 openwrt。当然因为对网络一窍不通，最后以失败告终。唯一的收获是成功关上了路由器上的 led :)。
+所以开始配置路由器吧，前提条件是对 linux 和网络有基本的了解。
+安装 LEDELEDE 是一个基于 openwrt 的发行版。貌似是觉得 openwrt 开发太慢了，于是 fork 了一份代码重新开发。
+安装的教程网上有很多，此处就不赘述了。大概思路就是下载固件，scp 到路由器上（当然要是从原生的系统刷的话还要用到 ftp），然后安装。这里我们选择目前最新的稳定版 LEDE 17.01.1。
+装上之后修改一下密码，打开 wifi，配置好 wifi。
+具体的教程可以参考这里
+配置 ipv6下一步先配置 ipv6。我所使用过的 ipv6 配置 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2017/05/02/Docker-%E9%83%A8%E7%BD%B2-shadowsocks/" title="Docker 部署 shadowsocks">Docker 部署 shadowsocks</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-05-02T01:03:46.000Z" title="发表于 2017-05-02 01:03:46">2017-05-02</time></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Docker/">Docker</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/shadowsocks/">shadowsocks</a></span></div><div class="content">最近工作时也慢慢地接触到了后端方面的项目，很多项目部署时都用了 Docker Compose。因此也学习了一些 Docker 的基本操作。
+然后突发奇想地想用 Docker 跑一跑 shadowsocks，这样的话可以减少配置的麻烦（虽然原来的方法已经很方便了。。）
+shadowsocks之前一直装的是 python 版本，后来发现 shadowsocks-libev 在 ubuntu 16.10 或者更高版本上能够直接通过 apt 安装了，而这也正是 Docker 的优势所在，能够直接在期望的系统上执行命令。所以果断决定装 shadowsocks-libev。
+Docker安装 Docker 很简单，只需要到官网按着教程走就行了，然后再学习学习 Docker 的基本原理和命令就可以。
+所以剩下的事就简单了，可以写这样的一个 Dockerfile
+12345FROM ubuntu:16.10RUN apt update &amp;&amp; apt install -y shadowsocks-libevCMD /usr/bin/ss-server -s ::0 -s 0.0.0.0  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2017/04/29/Vue-%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" title="Vue 源码学习-组件通信">Vue 源码学习-组件通信</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2017-04-29T20:16:59.000Z" title="发表于 2017-04-29 20:16:59">2017-04-29</time></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Vue/">Vue</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a></span></div><div class="content">Vue 中组件化是很重要的一个概念。而组件之间通信是很常见的一个需求。
+组件间通信最常见的就是父子组件之间通信了。父组件状态发生变化，向子组件分发事件；子组件状态变化，向父组件提交事件。当然有时也会遇到两个组件在组件树中相隔甚远却需要通信的情况，这时候我们可以使用一个事件总线来处理，vuex 之类的库可以看成是高级一点的事件总线。
+所以我们就来看看 Vue 中是如何实现父子组件通信的。
+父组件 -&gt; 子组件 Prop正如官方文档中所说的，在父组件向子组件通信的时候，应该使用 Prop 传递数据。
+这个传递过程具体是怎么样的呢？如果阅读了前面的几篇博客应该会有所了解。下面我们再梳理一下。
+
+父组件状态发生变化
+触发 vm._watcher （这个 Watcher 是触发组件更新的）
+生成新的 VNode，并且子组件 VNode 上挂载对应 vm 的 prepatch 函数
+更新 DOM 的同时对子组件的 vm 实例进行 prepatch，改变 vm 的 props
+子组件的 props 变化后，订阅 props 的 Watcher 会自动执行（异步执行，会放在一个事件队列中）
+
+在 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">pengchongfu</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/pengchongfu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:pengchongfu@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/15/%E5%AE%B6%E7%94%A8-nas-%E6%90%AD%E5%BB%BA/" title="家用 nas 搭建">家用 nas 搭建</a><time datetime="2024-04-15T07:54:34.000Z" title="发表于 2024-04-15 07:54:34">2024-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/22/%E4%BA%92%E8%81%94%E7%BD%91%E4%BA%A7%E5%93%81%E7%A0%94%E5%8F%91%E6%B5%81%E7%A8%8B/" title="互联网产品研发流程">互联网产品研发流程</a><time datetime="2024-02-22T13:59:56.000Z" title="发表于 2024-02-22 13:59:56">2024-02-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/12/sing-box-tun-%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/" title="sing-box tun 模式介绍">sing-box tun 模式介绍</a><time datetime="2023-11-12T21:24:59.000Z" title="发表于 2023-11-12 21:24:59">2023-11-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/05/%E6%A0%91%E8%8E%93%E6%B4%BE%E9%85%8D%E7%BD%AE%E4%B8%BA%E4%BB%A3%E7%90%86%E7%BD%91%E5%85%B3/" title="树莓派配置为代理网关">树莓派配置为代理网关</a><time datetime="2023-10-05T11:12:00.000Z" title="发表于 2023-10-05 11:12:00">2023-10-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/03/04/LEDE-%E9%85%8D%E7%BD%AE-ipv6/" title="LEDE 配置 ipv6">LEDE 配置 ipv6</a><time datetime="2018-03-04T22:52:30.000Z" title="发表于 2018-03-04 22:52:30">2018-03-04</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Docker/" style="font-size: 1.15em; color: rgb(161, 84, 76)">Docker</a><a href="/tags/shadowsocks/" style="font-size: 1.27em; color: rgb(72, 155, 139)">shadowsocks</a><a href="/tags/LEDE/" style="font-size: 1.21em; color: rgb(79, 92, 160)">LEDE</a><a href="/tags/openwrt/" style="font-size: 1.33em; color: rgb(76, 122, 65)">openwrt</a><a href="/tags/ipv6/" style="font-size: 1.15em; color: rgb(194, 123, 2)">ipv6</a><a href="/tags/Vue/" style="font-size: 1.39em; color: rgb(93, 88, 12)">Vue</a><a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.45em; color: rgb(180, 133, 88)">前端</a><a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 1.21em; color: rgb(72, 78, 127)">代理</a><a href="/tags/sing-box/" style="font-size: 1.15em; color: rgb(98, 102, 48)">sing-box</a><a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" style="font-size: 1.27em; color: rgb(10, 60, 157)">树莓派</a><a href="/tags/webpack/" style="font-size: 1.15em; color: rgb(200, 126, 153)">webpack</a><a href="/tags/nas/" style="font-size: 1.15em; color: rgb(189, 199, 144)">nas</a><a href="/tags/clash/" style="font-size: 1.15em; color: rgb(168, 134, 166)">clash</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2018/03/"><span class="card-archive-list-date">三月 2018</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2018/02/"><span class="card-archive-list-date">二月 2018</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2017/05/"><span class="card-archive-list-date">五月 2017</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2017/04/"><span class="card-archive-list-date">四月 2017</span><span class="card-archive-list-count">4</span></a></li></ul></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2024 By pengchongfu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

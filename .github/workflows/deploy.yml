@@ -2,10 +2,13 @@ name: deploy
 on:
   push:
     branches:
-      source
+      - source
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,4 +31,4 @@ jobs:
           git init
           git add --all
           git commit -m "deploy"
-          git push --force https://${{ secrets.ghp }}@github.com/pengchongfu/pengchongfu.github.io.git master
+          git push --force https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/pengchongfu/pengchongfu.github.io.git master
